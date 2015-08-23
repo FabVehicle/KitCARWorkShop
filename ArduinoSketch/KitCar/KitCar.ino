@@ -10,27 +10,24 @@ const int dcPin1 = 7;
 const int dcPin2 = 8;
 const int pmPin = 6;
 
+// モータ用パラメータ定数
+const int incS =  6;     // 一回当りのサーボモータパラメータ変化量
+const int maxM = 150;    // DCモータパラメータの最大値
+const int minS =  78;    // サーボモータパラメータの最小値
+const int maxS = 102;    // サーボモータパラメータの最大値
 
 // モーター用パラメータ変数
 int iMotor;        // DCモータ駆動用のパラメータ
 int iServo;        // サーボーモータのパラメータ(角度)
 
-//
-int diS;
-
-// モータ用パラメータ定数
-const int incS =  6;     // 操作一回当りのサーボモータパラメータ変化量
-const int maxM = 150;    // DCモータパラメータの最大値
-const int minS =  78;    // サーボモータパラメータの最小値
-const int maxS = 102;    // サーボモータパラメータの最大値
-
 int dtime;               // 停止時間[ms]
+int diS;                 // サーボ回転方向(１：順回転)
+
 //---------------------------------------------------
 // セットアップ関数
 //---------------------------------------------------
 void setup()
 {
-  Serial.begin(9600);
   myservo.attach(servoPin);
   mydc.attach(dcPin1,dcPin2,pmPin);
   
@@ -46,8 +43,6 @@ void loop()
 {  
 
   mydc.write(iMotor);
-    
-  iServo = constrain(iServo,minS,maxS);
   myservo.write(iServo);
   
   if ( iServo == 90 ) {
@@ -58,6 +53,7 @@ void loop()
   delay ( dtime );
   
   iServo += (incS * diS);
+  
   if ( maxS < iServo ) {
     iServo -= 2*incS;
     diS *= -1;
