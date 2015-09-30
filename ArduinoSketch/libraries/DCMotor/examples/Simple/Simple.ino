@@ -25,7 +25,7 @@ void loop()
   for ( iMotor = minM ; iMotor <= maxM; iMotor += 10 )
   {
     mydc.write(iMotor);             // DCモータへ出力
-    delay(15);
+    delay(500);
   }
  
 }
