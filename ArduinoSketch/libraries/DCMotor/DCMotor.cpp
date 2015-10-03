@@ -36,8 +36,8 @@ void DCMotor::write( int value )
 		digitalWrite(m_outpin2, HIGH);
 		analogWrite(m_pwmpin,cvalue);
 	} else { 
-		digitalWrite(m_outpin1, LOW);
-		digitalWrite(m_outpin2, HIGH);
+		digitalWrite(m_outpin1, HIGH);
+		digitalWrite(m_outpin2, LOW);
 		analogWrite(m_pwmpin,-cvalue);
 	}
 #else
